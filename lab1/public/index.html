@@ -29,44 +29,77 @@
     
   </head>
   <body>
-    <h1>Test</h1>
+    <h1>Please enter your name below</h1>
     <div id="root"></div>
     <script type="text/babel">
-    class NameForm extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = {value: ''};
+          class NameForm extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {value: ''};
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-      }
+              this.handleChange = this.handleChange.bind(this);
+              this.handleSubmit = this.handleSubmit.bind(this);
+            }
 
-      handleChange(event) {
-        this.setState({value: event.target.value});
-      }
+            handleChange(event) {
+              this.setState({value: event.target.value});
+            }
 
-      handleSubmit(event) {
-        alert('A name was submitted: ' +  this.state.value);
-        event.preventDefault();
-      }
+            handleSubmit(event) 
+            {
+              alert("Hello, " + this.state.value);
+              event.preventDefault();
+            }
 
-      render() {
-        return (
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-        );
-      }
-    }
+            formValidation(e) {
+              e.preventDefault();
+                let fields = {};
+                fields["name"] = "";
+                this.SetState({fields:fields});
+                  alert("okie dokie");
+            }
+            
+            validationForm(e) {
+              let fields = this.state.fields;
+              let errors = {};
+              let formIsValid = true;
 
-    ReactDOM.render(
-  <NameForm />,
-  document.getElementById('root')
-);
+            if (!fields["name"]) {
+              formIsValid = false;
+              errors["name"] = "*Please enter your name";
+            }
+
+            if (typeof fields["name"] !== "undefined") {
+              if (!fields["name"].match(/^[a-zA-Z ]*$/)) {
+                formIsValid = false;
+                errors["name"] = "*Please enter alphabet characters only.";
+              }
+            }
+
+            this.setState({
+              errors:errors
+            });
+            return formIsValid;
+          }
+        
+
+            render() {
+              return (
+                <form onSubmit={this.handleSubmit}>
+                  <label>
+                    Name:
+                    <input type="text" id="name" value={this.state.value} onChange={this.handleChange}/>
+                  </label>
+                  <input type="submit" value="Submit"/>
+                </form>
+              );
+            }
+          }
+
+          ReactDOM.render(
+        <NameForm />,
+        document.getElementById('root')
+      );
     </script>
 
     <!--
