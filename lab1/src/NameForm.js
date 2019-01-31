@@ -4,7 +4,7 @@ import React from 'react';
 class NameForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '',isAvail:false, isError:false};
+    this.state = {value: '',isAvail:false, isError:true};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,12 +19,9 @@ class NameForm extends React.Component {
       event.preventDefault();
       this.setState({isAvail:true})
     } else {
-      event.preventDefaut();
-      this.setState({isError:true})
-    }
-    event.preventDefault();
+      event.preventDefault();
   }
-
+}
   render() {
     return (
       <div>
@@ -35,15 +32,12 @@ class NameForm extends React.Component {
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <button>Submit</button>
-        </form> :
+        </form>
+        :
         <div><p>Good morning,
           {this.state.value}
         </p></div>
       } </div>
-      :
-      else {(!this.state.isError) ?
-
-      : <div><p class="error">Error</p></div>
     );
   }
 }
